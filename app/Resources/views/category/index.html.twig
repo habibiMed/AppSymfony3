@@ -1,0 +1,56 @@
+{% extends 'back.html.twig' %}
+
+{% block content %}
+    <h3>Liste des Categories</h3>
+
+<div class="pull-right">
+   <a class="btn btn-success" href="{{ path('category_admin_new') }}"><i class="fa fa-plus"> Nouvelle categorie</a></i>  
+</div>
+<br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Slug</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td><a href="{{ path('category_admin_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
+                <td nowrap="nowrap">{{ category.libelle }}</td>
+                <td nowrap="nowrap">{{ category.slug }}</td>
+                <td>
+                {% if category.description| length > 80 %}
+                {{ category.description | slice(0,80) }} ...
+                {% else %}
+                {{ category.description }}
+                {% endif %}
+                </td>
+                <td>
+                    
+                            <a class="btn btn-info" href="{{ path('category_admin_show', { 'id': category.id }) }}"><i class="fa fa-search"></i></a>
+                        
+                            <a class="btn btn-warning" href="{{ path('category_admin_edit', { 'id': category.id }) }}"><i class="fa fa-edit"></i></a>
+                       
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+ <div class="navigation">
+     {{ knp_pagination_render(categories) }}
+ </div>
+   
+                 
+{% endblock %}
+
+{% block breadcrump %}
+  <ul class="breadcrumb">
+     <li><a href="">Tableau de bord</a></li>
+      <li class="active">Liste des categories</li> 
+  </ul>
+{% endblock %}

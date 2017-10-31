@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+ <section class="hero is-primary is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+       Contactez nous
+      </h1>
+      <h2 class="subtitle">
+       Lorem ipsum dolor sit amet, consectetur.
+      </h2>
+    </div>
+  </div>
+</section>
+<hr>
+
+<div class="container">
+	<div class="columns">
+		<div class="column is-offset-one-quarter is-half">			
+  <h2 class="title is-2">page contact</h2>
+   <div class="field">
+   {{ form_label(form.from ,null, {'labe_attrattr':{ 'class' : 'label' }}) }}
+   <div class="control">
+    {{ form_widget(form.from,{'attr':{ 'class' : 'input' }}) }}
+    </div>
+   </div>
+
+      <div class="field">
+   {{ form_label(form.subject ,null, {'labe_attrattr':{ 'class' : 'label' }}) }}
+   <div class="control">
+    {{ form_widget(form.subject,{'attr':{ 'class' : 'input' }}) }}
+    </div>
+   </div>
+
+      <div class="field">
+   {{ form_label(form.body ,null, {'labe_attrattr':{ 'class' : 'label' }}) }}
+   <div class="control">
+    {{ form_widget(form.body,{'attr':{ 'class' : 'input' }}) }}
+    </div>
+   </div>
+
+    <div class="field">
+       <div class="control">
+        {{ form_widget(form.send,{'attr':{ 'class' : 'button is-success' }}) }}
+      </div>
+    </div> 
+
+	</div>
+	</div>
+</div>
+
+{% endblock %}

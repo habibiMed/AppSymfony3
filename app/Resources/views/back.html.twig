@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('back/bootstrap.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('fontawsome/css/font-awesome.min.css')}}">
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">AppSymfony3</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#"><i class="fa fa-home"></i> Accueil <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">blog</a></li>
+        <li><a href="#">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+       {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <li><a href="#"><i class="fa fa-cog"></i> connecté tant que {{ app.user.username }}</a></li>
+        <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i> {{ 'layout.logout' | trans({},'FOSUserBundle') }}</a></li> 
+        {% else %}
+        <li><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in"></i> {{ 'layout.login' | trans({},'FOSUserBundle') }}</a></li>
+        <li><a href="{{ path('fos_user_registration_register')}}"><i class="fa fa-user"></i> {{ 'layout.register' | trans({},'FOSUserBundle') }}</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+<div class="row">
+   <div class="col-md-4">
+    {% block breadcrump %}{% endblock %}
+   </div>
+   <div class="col-md-8" align="right" id="app">
+   {% verbatim %}
+     <select v-on:change="getAccesRapide" name="accesRapide" v-model="accesRapide">
+        <option v-for="acces in ListeAccesRapide" v-bind:value="acces.lien">{{ acces.libelle }}</option>
+     </select>
+     {% endverbatim %}
+   </div>
+</div>
+   <div class="row">
+      <div class="col-md-2">
+        <ul class="list-group">
+          <li class="list-group-item"><a href="">Tableau de brd</a></li>
+          <li class="list-group-item">Categrie</li>
+          <li class="list-group-item"><a href="{{ path('category_admin_index') }}">Liste des categries</a></li>
+          <li class="list-group-item"><a href="{{ path('category_admin_new') }}">Nouvelle categorie</a></li>
+          <li class="list-group-item">Article</li>
+          <li class="list-group-item"><a href="{{ path('admin_post_index') }}">Liste des articles</a></li>
+          <li class="list-group-item"><a href="{{ path('admin_post_new') }}">Nouvelle article</a></li>
+          <li class="list-group-item">Adminstration</li>
+          <li class="list-group-item"><a href="">Statistique</a></li>
+          <li class="list-group-item"><a href="">Parametrage</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-10 well">
+        {{ include('alert.html.twig') }}
+       {% block content %}{% endblock %}
+       
+      </div>
+   </div>
+</div>
+        <script src="{{ asset('js/vue.min.js') }}"></script>
+        <script>
+          var myApp = new Vue(
+          {
+            el:"#app",
+            data:{
+               accesRapide:"",
+               ListeAccesRapide : [
+                  { libelle:"AccesRapide" , lien:"" },
+                   { libelle:"Nouvelle Article" , lien:"/admin/post/new" },
+                    { libelle:"Nouvelle Categorie" , lien:"/admin/category/new" }
+               ]
+             },
+             methods :{
+                getAccesRapide : function(){
+                 window.location = this.accesRapide;
+                }
+             }
+          });
+        </script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
